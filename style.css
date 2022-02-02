@@ -1,0 +1,8 @@
+blockquote {
+	background: #eee;
+	padding: 8px;
+}
+
+blockquote > p {
+	margin: 0;
+}
