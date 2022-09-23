@@ -1,27 +1,15 @@
 SRC=$(wildcard *.md)
 PDF=$(subst .md,.pdf,$(SRC))
-HTML=$(subst .md,.html,$(SRC))
 BAK=$(subst .md,.md.bak,$(SRC))
-CSS=style.css
-MARGIN=0.5in
+MARGIN=1.0in
 
-all: $(HTML) $(PDF)
+all: $(PDF)
 
-html: $(HTML)
-
-%.pdf: %.html
-	wkhtmltopdf --enable-local-file-access \
-		--margin-top $(MARGIN) \
-		--margin-bottom $(MARGIN) \
-		--margin-left $(MARGIN) \
-		--margin-right $(MARGIN) \
-		$< $@
-
-%.html: %.md $(CSS)
-	pandoc -s $< --pdf-engine=wkhtmltopdf --css=$(CSS) -o $@
+%.pdf: %.md
+	pandoc -V geometry:margin=$(MARGIN) -s $< -o $@
 
 check:
 	find . -type f -name '*.md' -exec aspell check {} \;
 
 clean:
-	rm -f $(PDF) $(HTML) $(BAK)
+	rm -f $(PDF) $(BAK)
