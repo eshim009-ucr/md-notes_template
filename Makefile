@@ -5,8 +5,8 @@ MARGIN=1.0in
 
 all: $(PDF)
 
-%.pdf: %.md
-	pandoc -V geometry:margin=$(MARGIN) -s $< -o $@
+%.pdf: %.md $(CSS)
+	pandoc -H header.tex -s $< -o $@
 
 check:
 	find . -type f -name '*.md' -exec aspell check {} \;
